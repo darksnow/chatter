@@ -1,0 +1,168 @@
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--ui-bg: #ededed;
+	--ui-component-bg: #fff;
+	--ui-border: #333333;
+	--ui-text-col: #333;
+
+	--ui-col-error: #ff3e00;
+	--ui-col-warning: #ff8630;
+	--ui-col-info: #3eff00;
+
+	--ui-radius: 5px;
+	--ui-shadow: 1px 1px 8px rgba(0,0,0,.2);
+	--ui-spacing: 1rem;
+}
+
+.dark {
+	--ui-component-bg: #333;
+	--ui-text-col: #fff;
+}
+
+html {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #333;
+	height: 100%;
+	background: var(--ui-bg);
+}
+
+#sapper {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+main {
+	flex-grow: 1;
+	overflow: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 0.5em 0;
+	font-weight: 400;
+	line-height: 1.2;
+}
+
+code {
+	font-family: menlo, inconsolata, monospace;
+	font-size: calc(1em - 2px);
+	color: #555;
+	background-color: #f0f0f0;
+	padding: 0.2em 0.4em;
+	border-radius: 2px;
+}
+
+@media (min-width: 400px) {
+	body {
+		font-size: 16px;
+	}
+}
+
+label {
+	display: block;
+	margin-top: 1rem;
+	font-weight: bold;
+	font-size: 1.3rem;
+}
+
+h1 { font-size: 68px; line-height: 1em; }
+h2 { font-size: 2.4rem; line-height: 1.083em; }
+h3 { font-size: 1.75rem; line-height: 1.142em; }
+h4 { font-size: 1.3rem; }
+
+li { margin-left: 2rem; }
+ul { list-style: initial; padding-top: 0.5rem; }
+ol { list-style: decimal; }
+p  {	margin: 0; }
+p+p{ margin-top: 0.6rem; }
+a {
+  text-decoration: none;
+	color: inherit;
+	border-bottom: 1px dotted inherit;
+}
+a:hover {
+	border-style: solid;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/**
+ * Generic form handling.
+ */
+input, select, textarea {
+  border: 1px solid #555;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  width: 100%;
+}
+
+fieldset {
+  border: 1px solid #555;
+	border-radius: 5px;
+	margin-top: 1rem;
+}
+legend {
+	font-weight: bold;
+	font-size: 1.3rem;
+	padding: 0 0.5rem 0 0;
+}
+
+button, a.button, input[ype="button"], input[type="submit"] {
+	font-weight: bold;
+  font-size: 0.9rem;
+  line-height: 2.2em;
+	padding: 0 1rem;
+  margin: 0.8rem 0.5rem 0 0;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.2rem;
+	border: 2px solid #555;
+  background: #dedede;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="submit"], button[type="submit"] {
+	border-color: rgb(255,62,0);
+}
+
+button:hover, a.button:hover {
+	background-color: #ccc;
+}
+
+.description {
+	font-size: 0.8rem;
+}
+.error {
+	color: var(--ui-col-error);
+}
+form + form {
+	margin-top: var(--ui-spacing);
+}
+.panel {
+	background: var(--ui-component-bg);
+	border-radius: var(--ui-radius);
+	box-shadow: var(--ui-shadow);
+	padding: var(--ui-spacing);
+	color: var(--ui-text-col);
+}
+.panel :first-child {
+	margin-top: 0;
+}
+.is-fullwidth {
+	width: 100%;
+}

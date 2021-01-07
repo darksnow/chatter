@@ -1,0 +1,50 @@
+version: '3.3'
+services:
+  couchdb:
+    image: couchdb:latest
+    container_name: "${PROJECT_NAME}_couchdb"
+    volumes:
+      - .persist/couchdb:/var/lib/couchdb
+      - ./conf/couchdb:/opt/couchdb/etc/local.d
+    labels:
+      - 'traefik.backend=couchdb'
+      - 'traefik.port=5984'
+      - 'traefik.frontend.rule=Host:couchdb.${PROJECT_BASE_URL}'
+  
+  app:
+    image: node:current-alpine
+    container_name: "${PROJECT_NAME}_app"
+    working_dir: /home/node/app/client
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - couchdb
+    command: "npm run dev"
+    environment:
+      - AUTH_COUCH_PROTOCOL
+      - AUTH_COUCH_HOST
+      - AUTH_COUCH_ADMIN
+      - AUTH_COUCH_PASS
+      - AUTH_COUCH_USERDB
+      - AUTH_COUCH_USERDB_PREFIX
+    labels:
+      - 'traefik.client.backend=client'
+      - 'traefik.client.port=3000'
+      - 'traefik.client.frontend.rule=Host:${PROJECT_BASE_URL}'
+      - 'traefik.reload.port=10000'
+      - 'traefik.reload.frontend.rule=Host:${PROJECT_BASE_URL}'
+      - 'traefik.reload.frontend.entryPoints=reload'
+
+  traefik:
+    image: traefik:1.7.16-alpine
+    container_name: "${PROJECT_NAME}_traefik"
+    command: -c /traefik.toml --api --docker --logLevel=INFO
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8080:8080' # Dashboard
+      - '10000:10000' # Sapper hot reload
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./conf/traefik.toml:/traefik.toml
+      - ./conf/ssl/:/certs/
